@@ -24,6 +24,7 @@ git clone https://github.com/smithsa/circuit-playground-squid-game.git
 
 4. Load the content of the repository onto the "CIRCUITPY" disk drive
 
+5. If you need to connect to a serial port be sure to checkout Adafruit's ["Conencting to the Serial Port"](https://learn.adafruit.com/adafruit-circuit-playground-express/connecting-to-the-serial-console) 
 
 # Usage
 
