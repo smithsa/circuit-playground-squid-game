@@ -5,6 +5,7 @@ from adafruit_circuitplayground.express import cpx
 GREEN_LIGHT = True
 GAME_OVER = False
 ENG_GAME_SOUND_EFFECT_PLAYED = False
+INTERVAL_SET = False
 
 def turn_on_lights(color):
     for i in range(len(cpx.pixels)):
@@ -36,8 +37,8 @@ while True:
         time.sleep(.1)
         
         if GAME_OVER:
-            if(ENG_GAME_SOUND_EFFECT_PLAYED == False):
-                cpx.play_file("game_over.wav") 
+            if ENG_GAME_SOUND_EFFECT_PLAYED == False:
+                cpx.play_file("game-over.wav") 
                 ENG_GAME_SOUND_EFFECT_PLAYED = True
             
             turn_on_lights((255, 0, 0))
@@ -60,5 +61,11 @@ while True:
 
             # set green light if random amount of time has passed
             now = time.monotonic()
-            if now - time_green_light_stopped > random.randrange(2, 11):
+            if INTERVAL_SET == False:
+                random_interval = random.randrange(2, 11)
+                INTERVAL_SET = True
+                
+            print("interval:", random_interval, "time diff:", now - time_green_light_stopped)
+            if now - time_green_light_stopped > random_interval:
+                INTERVAL_SET = False
                 GREEN_LIGHT = True
