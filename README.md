@@ -3,7 +3,7 @@
 
 The project was built using the Circuit Playground Express and coded in Micropython. The code utilizes the Circuit Playground Express' built-in triple-axis accelerometer, magnetic speaker/buzzer, push button, and LEDs. 
 
-:warning: The game uses a gun shot to indicate the player has lost.
+:warning: Game uses a gun shot to indicate a player has lost.
 
 # Prerequisites
 
