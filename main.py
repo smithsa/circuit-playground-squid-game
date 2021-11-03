@@ -6,6 +6,7 @@ GREEN_LIGHT = True
 GAME_OVER = False
 ENG_GAME_SOUND_EFFECT_PLAYED = False
 INTERVAL_SET = False
+GREEN_LIGHT_CYCLE_SET = False
 
 def turn_on_lights(color):
     for i in range(len(cpx.pixels)):
@@ -25,25 +26,34 @@ def player_moved(basline_xyz, current_xyz):
 
 while True:
     if GREEN_LIGHT:
-        # TODO - can this be played on a loop
+        if GREEN_LIGHT_CYCLE_SET == False:
+            target_green_light_cyle_index = random.randrange(0, 2)
+            green_light_cyle_index = 0
+            GREEN_LIGHT_CYCLE_SET = True
+
         turn_on_lights((0, 255, 0))
         cpx.play_file("green-light.wav")
         turn_on_lights((0, 0, 0))
-        baseline_x, baseline_y, baseline_z = cpx.acceleration
-        basline_xyz = (baseline_x, baseline_y, baseline_z)
-        GREEN_LIGHT = False
-        time_green_light_stopped = time.monotonic()
+        basline_xyz = cpx.acceleration
+        # red light
+        if green_light_cyle_index == target_green_light_cyle_index:
+            time_green_light_stopped = time.monotonic()
+            GREEN_LIGHT_CYCLE_SET = False
+            GREEN_LIGHT = False
+            continue
+
+        green_light_cyle_index += 1
     else:
         time.sleep(.1)
         
         if GAME_OVER:
-            if ENG_GAME_SOUND_EFFECT_PLAYED == False:
-                cpx.play_file("game-over.wav") 
-                ENG_GAME_SOUND_EFFECT_PLAYED = True
-            
             turn_on_lights((255, 0, 0))
             time.sleep(.9)
             turn_on_lights((0, 0, 0))
+
+            if ENG_GAME_SOUND_EFFECT_PLAYED == False:
+                cpx.play_file("game-over.wav") 
+                ENG_GAME_SOUND_EFFECT_PLAYED = True
 
             # reset the game
             if cpx.button_a or cpx.button_b:
@@ -53,9 +63,8 @@ while True:
                 print("Button pressed!")
         else:
             # read for current movement, end game if user moved
-            current_x, current_y, current_z = cpx.acceleration
-            current_xyz = (current_x, current_y, current_z)
-            if(player_moved(basline_xyz, current_xyz)):
+            current_xyz= cpx.acceleration
+            if player_moved(basline_xyz, current_xyz):
                 GAME_OVER = True
 
 
@@ -65,7 +74,6 @@ while True:
                 random_interval = random.randrange(2, 11)
                 INTERVAL_SET = True
                 
-            print("interval:", random_interval, "time diff:", now - time_green_light_stopped)
             if now - time_green_light_stopped > random_interval:
                 INTERVAL_SET = False
                 GREEN_LIGHT = True
