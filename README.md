@@ -3,7 +3,7 @@
 
 The project was built using the Circuit Playground Express and coded in Micropython. The code utilizes the Circuit Playground Express' built-in triple-axis accelerometer, magnetic speaker/buzzer, push button, and LEDs. 
 
-:warning: The game uses a gun shot to indicate the player has lost.
+:warning: Game uses a gun shot to indicate a player has lost.
 
 # Prerequisites
 
@@ -24,7 +24,7 @@ git clone https://github.com/smithsa/circuit-playground-squid-game.git
 
 4. Load the content of the repository onto the "CIRCUITPY" disk drive
 
-5. If you need to connect to a serial port be sure to checkout Adafruit's ["Conencting to the Serial Port"](https://learn.adafruit.com/adafruit-circuit-playground-express/connecting-to-the-serial-console) 
+5. If you need to connect to a serial port be sure to checkout Adafruit's ["Conencting to the Serial Port"](https://learn.adafruit.com/adafruit-circuit-playground-express/connecting-to-the-serial-console) tutorial
 
 # Usage
 
